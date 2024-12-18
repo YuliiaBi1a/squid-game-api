@@ -4,6 +4,7 @@ import com.example.squid_game_api.dto.PlayerRequest;
 import com.example.squid_game_api.dto.PlayerResponse;
 import com.example.squid_game_api.services.PlayerService;
 import jakarta.validation.Valid;
+import jakarta.websocket.server.PathParam;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,10 +26,20 @@ public class PlayerController {
         PlayerResponse newPlayer = playerService.createPlayer(playerRequest);
         return new ResponseEntity<>(newPlayer, HttpStatus.CREATED);
     }
-
+//search by name
     @GetMapping
-    public ResponseEntity<List<PlayerResponse>> getAllPlayers() {
-        List<PlayerResponse> players = playerService.findAllPlayers();
+    public ResponseEntity<List<PlayerResponse>> getPlayerList(@PathParam("name") String name) {
+        if (name == null) {
+            List<PlayerResponse> players = playerService.findAllPlayers();
+            return new ResponseEntity<>(players, HttpStatus.OK);
+        }
+        List<PlayerResponse> searchPlayers = playerService.searchByName(name);
+        return new ResponseEntity<>(searchPlayers, HttpStatus.OK);
+    }
+//search by game id
+    @GetMapping("game/{gameId}")
+    public ResponseEntity<List<PlayerResponse>> getPlayersByGameId(@PathVariable Long gameId) {
+        List<PlayerResponse> players = playerService.findPlayersByGameId(gameId);
         return new ResponseEntity<>(players, HttpStatus.OK);
     }
 
@@ -48,5 +59,11 @@ public class PlayerController {
     public ResponseEntity<String> deletePlayer(@PathVariable Long id) {
         playerService.deletePlayerById(id);
         return new ResponseEntity<>("Player has been deleted.", HttpStatus.OK);
+    }
+
+    @DeleteMapping("/inactive")
+    public ResponseEntity<Void> deleteInactivePlayers() {
+        playerService.deleteAllInactivePlayers();
+        return ResponseEntity.noContent().build();
     }
 }

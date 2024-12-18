@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Random;
 
-
 @Service
 public class ParticipationService {
 
@@ -32,19 +31,33 @@ public class ParticipationService {
         this.gameService = gameService;
     }
 
+    //Create participation
     // Create a new participation
     public ParticipationResponse createParticipation(ParticipationRequest request) {
         Player player = playerRepository.findById(request.playerId())
                 .orElseThrow(() -> new RuntimeException("Player with ID " + request.playerId() + " not found."));
 
+        // Перевірка, чи гравець активний
+        if (!player.isPlaying()) {
+            throw new RuntimeException("Player with ID " + request.playerId() + " cannot play anymore.");
+        }
+
         Game game = gameRepository.findById(request.gameId())
                 .orElseThrow(() -> new RuntimeException("Game with ID " + request.gameId() + " not found."));
 
+        // Перевірка, чи вже існує участь цього гравця в цій грі
+        boolean exists = participationRepository.existsByPlayerIdAndGameId(request.playerId(), request.gameId());
+        if (exists) {
+            throw new RuntimeException("Player with ID " + request.playerId() + " is already participating in Game with ID " + request.gameId() + ".");
+        }
+
         Participation participation = request.toEntity(player, game);
-        participation.setIsPassed(null);
+        participation.setIsPassed(null); // Початковий статус `isPassed` встановлюється як `null`
+
         Participation savedParticipation = participationRepository.save(participation);
         return ParticipationResponse.fromEntity(savedParticipation);
     }
+
 
     // Get all participations
     public List<ParticipationResponse> findAllParticipations() {
@@ -71,8 +84,17 @@ public class ParticipationService {
         Player player = playerRepository.findById(request.playerId())
                 .orElseThrow(() -> new RuntimeException("Player with ID " + request.playerId() + " not found."));
 
+        if (!player.isPlaying()) {
+            throw new RuntimeException("Player with ID " + request.playerId() + " is not currently playing.");
+        }
+
         Game game = gameRepository.findById(request.gameId())
                 .orElseThrow(() -> new RuntimeException("Game with ID " + request.gameId() + " not found."));
+
+        boolean exists = participationRepository.existsByPlayerIdAndGameIdAndIdNot(request.playerId(), request.gameId(), id);
+        if (exists) {
+            throw new RuntimeException("Player with ID " + request.playerId() + " is already participating in Game with ID " + request.gameId() + ".");
+        }
 
         existingParticipation.setPlayer(player);
         existingParticipation.setGame(game);
@@ -83,6 +105,7 @@ public class ParticipationService {
         return ParticipationResponse.fromEntity(updatedParticipation);
     }
 
+
     // Delete a participation
     public void deleteParticipationById(Long id) {
         if (!participationRepository.existsById(id)) {
@@ -91,7 +114,7 @@ public class ParticipationService {
         participationRepository.deleteById(id);
     }
 
-
+    // Method for finish game and change status of the player
     @Transactional
     public void finalizeGame(Long gameId) {
         Game game = gameRepository.findById(gameId)
@@ -105,23 +128,18 @@ public class ParticipationService {
 
         Random random = new Random();
         for (Participation participation : participations) {
-            boolean isPassed = random.nextBoolean(); // Випадково встановлюється true або false
-            participation.setPassed(isPassed); // Змінюється статус `isPassed`
+            boolean isPassed = random.nextBoolean();
+            participation.setPassed(isPassed);
 
-            // Якщо `isPassed` = true, змінюємо `score` на 1000
             if (isPassed) {
                 participation.setScore(1000);
             } else {
-                // Якщо гравець не пройшов, змінюємо його `isPlaying` на false
                 Player player = participation.getPlayer();
                 player.setPlaying(false);
-                playerRepository.save(player); // Зберігаємо оновлення статусу гравця
+                playerRepository.save(player);
             }
 
-            participationRepository.save(participation); // Зберігаємо оновлення участі
+            participationRepository.save(participation);
         }
     }
-
-
-
 }
