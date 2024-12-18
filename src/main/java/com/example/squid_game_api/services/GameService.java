@@ -3,6 +3,9 @@ package com.example.squid_game_api.services;
 import com.example.squid_game_api.dto.GameRequest;
 import com.example.squid_game_api.dto.GameResponse;
 import com.example.squid_game_api.entities.Game;
+import com.example.squid_game_api.exceptions.DependencyException;
+import com.example.squid_game_api.exceptions.DuplicateNameException;
+import com.example.squid_game_api.exceptions.NoIdFoundException;
 import com.example.squid_game_api.repositories.GameRepository;
 import com.example.squid_game_api.repositories.ParticipationRepository;
 import jakarta.transaction.Transactional;
@@ -27,7 +30,7 @@ public class GameService {
     public GameResponse createGame(GameRequest gameRequest) {
         Optional<Game> game = gameRepository.findByGameName(gameRequest.gameName());
                 if(game.isPresent()){
-                    throw new RuntimeException("Game with name " + gameRequest.gameName() + " already exist.");
+                    throw new DuplicateNameException(gameRequest.gameName());
                 }
         Game newGame = gameRequest.toEntity();
         Game savedGame = gameRepository.save(newGame);
@@ -43,18 +46,18 @@ public class GameService {
     // Get game by ID
     public GameResponse findGameById(Long id) {
         Game game = gameRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Game with ID " + id + " not found."));
+                .orElseThrow(() -> new NoIdFoundException(id));
         return GameResponse.fromEntity(game);
     }
 
     // Update a game
     public GameResponse updateGame(Long id, GameRequest gameRequest) {
         Game existingGame = gameRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Game with ID " + id + " not found."));
+                .orElseThrow(() -> new NoIdFoundException(id));
 
         Optional<Game> game = gameRepository.findByGameName(gameRequest.gameName());
         if(game.isPresent()){
-            throw new RuntimeException("Game with name " + gameRequest.gameName() + " already exist.");
+            throw new DuplicateNameException(gameRequest.gameName());
         }
 
         existingGame.setGameName(gameRequest.gameName());
@@ -72,12 +75,12 @@ public class GameService {
     @Transactional
     public void deleteGameById(Long id) {
         if (!gameRepository.existsById(id)) {
-            throw new RuntimeException("Game with ID " + id + " not found.");
+            throw new NoIdFoundException(id);
         }
 
         boolean hasParticipations = participationRepository.existsByGameId(id);
         if (hasParticipations) {
-            throw new RuntimeException("Game with ID " + id + " cannot be deleted because it has associated participations.");
+            throw new DependencyException(id);
         }
 
         gameRepository.deleteById(id);

@@ -2,9 +2,9 @@ package com.example.squid_game_api.services;
 
 import com.example.squid_game_api.dto.PlayerRequest;
 import com.example.squid_game_api.dto.PlayerResponse;
-import com.example.squid_game_api.entities.Game;
 import com.example.squid_game_api.entities.Participation;
 import com.example.squid_game_api.entities.Player;
+import com.example.squid_game_api.exceptions.*;
 import com.example.squid_game_api.repositories.ParticipationRepository;
 import com.example.squid_game_api.repositories.PlayerRepository;
 import jakarta.transaction.Transactional;
@@ -28,7 +28,7 @@ public class PlayerService {
     public PlayerResponse createPlayer(PlayerRequest playerRequest) {
         Optional<Player> player = playerRepository.findByName(playerRequest.name());
         if(player.isPresent()){
-            throw new RuntimeException("Game with name " + playerRequest.name() + " already exist.");
+            throw new DuplicateNameException(playerRequest.name());
         }
         Player newPlayer = playerRequest.toEntity();
         Player savedPlayer = playerRepository.save(newPlayer);
@@ -44,7 +44,7 @@ public class PlayerService {
     // Get player by ID
     public PlayerResponse findPlayerById(Long id) {
         Player player = playerRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Player with ID " + id + " not found."));
+                .orElseThrow(() -> new NoIdFoundException(id));
         return PlayerResponse.fromEntity(player);
     }
 
@@ -52,7 +52,7 @@ public class PlayerService {
     public List<PlayerResponse> searchByName(String name) {
         List<Player> playerList = playerRepository.findLikeName(name);
         if (playerList.isEmpty()) {
-            throw new RuntimeException("No players found with name starting with: " + name);
+            throw new NoPlayerNameFoundException(name);
         }
         return playerList.stream()
                 .map(PlayerResponse::fromEntity).toList();
@@ -62,7 +62,7 @@ public class PlayerService {
     public List<PlayerResponse> findPlayersByGameId(Long gameId) {
         List<Player> players = participationRepository.findPlayersByGameId(gameId);
         if (players.isEmpty()) {
-            throw new RuntimeException("No players found for Game with ID: " + gameId);
+            throw new NoRegistersFoundException();
         }
         return players.stream()
                 .map(PlayerResponse::fromEntity).toList();
@@ -71,11 +71,11 @@ public class PlayerService {
     // Update a player
     public PlayerResponse updatePlayer(Long id, PlayerRequest playerRequest) {
         Player existingPlayer = playerRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Player with ID " + id + " not found."));
+                .orElseThrow(() -> new NoIdFoundException(id));
 
         Optional<Player> player = playerRepository.findByName(playerRequest.name());
         if(player.isPresent()){
-            throw new RuntimeException("Game with name " + playerRequest.name() + " already exist.");
+            throw new DuplicateNameException(playerRequest.name());
         }
 
         existingPlayer.setName(playerRequest.name());
@@ -89,10 +89,10 @@ public class PlayerService {
     @Transactional
     public void deletePlayerById(Long id) {
         Player player = playerRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Player with ID " + id + " not found."));
+                .orElseThrow(() -> new NoIdFoundException(id));
 
         if (player.isPlaying()) {
-            throw new RuntimeException("Player with ID " + id + " cannot be deleted because they are currently playing.");
+            throw new DependencyException(id);
         }
 
         List<Participation> participations = participationRepository.findByPlayerId(id);
@@ -107,7 +107,7 @@ public class PlayerService {
         List<Player> inactivePlayers = playerRepository.findByIsPlayingFalse();
 
         if (inactivePlayers.isEmpty()) {
-            throw new RuntimeException("No inactive players found to delete.");
+            throw new NoRegistersFoundException();
         }
 
         for (Player player : inactivePlayers) {
@@ -115,6 +115,4 @@ public class PlayerService {
             playerRepository.delete(player);
         }
     }
-
-
 }

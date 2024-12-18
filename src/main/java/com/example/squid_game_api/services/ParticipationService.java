@@ -5,6 +5,7 @@ import com.example.squid_game_api.dto.ParticipationResponse;
 import com.example.squid_game_api.entities.Game;
 import com.example.squid_game_api.entities.Participation;
 import com.example.squid_game_api.entities.Player;
+import com.example.squid_game_api.exceptions.*;
 import com.example.squid_game_api.repositories.GameRepository;
 import com.example.squid_game_api.repositories.ParticipationRepository;
 import com.example.squid_game_api.repositories.PlayerRepository;
@@ -35,24 +36,23 @@ public class ParticipationService {
     // Create a new participation
     public ParticipationResponse createParticipation(ParticipationRequest request) {
         Player player = playerRepository.findById(request.playerId())
-                .orElseThrow(() -> new RuntimeException("Player with ID " + request.playerId() + " not found."));
+                .orElseThrow(() -> new NoIdFoundException(request.playerId()));
 
-        // Перевірка, чи гравець активний
         if (!player.isPlaying()) {
-            throw new RuntimeException("Player with ID " + request.playerId() + " cannot play anymore.");
+            throw new NoPlayingException("Player with ID " + request.playerId() + " cannot play anymore.");
         }
 
         Game game = gameRepository.findById(request.gameId())
-                .orElseThrow(() -> new RuntimeException("Game with ID " + request.gameId() + " not found."));
+                .orElseThrow(() -> new NoIdFoundException(request.gameId()));
 
         // Перевірка, чи вже існує участь цього гравця в цій грі
         boolean exists = participationRepository.existsByPlayerIdAndGameId(request.playerId(), request.gameId());
         if (exists) {
-            throw new RuntimeException("Player with ID " + request.playerId() + " is already participating in Game with ID " + request.gameId() + ".");
+            throw new DuplicateIdException(request.playerId(), request.gameId());
         }
 
         Participation participation = request.toEntity(player, game);
-        participation.setIsPassed(null); // Початковий статус `isPassed` встановлюється як `null`
+        participation.setIsPassed(null);
 
         Participation savedParticipation = participationRepository.save(participation);
         return ParticipationResponse.fromEntity(savedParticipation);
@@ -63,7 +63,7 @@ public class ParticipationService {
     public List<ParticipationResponse> findAllParticipations() {
         List<Participation> participations = participationRepository.findAll();
         if (participations.isEmpty()) {
-            throw new RuntimeException("No participation's found.");
+            throw new NoRegistersFoundException();
         }
         return participations.stream()
                 .map(ParticipationResponse::fromEntity).toList();
@@ -72,28 +72,28 @@ public class ParticipationService {
     // Get participation by ID
     public ParticipationResponse findParticipationById(Long id) {
         Participation participation = participationRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Participation with ID " + id + " not found."));
+                .orElseThrow(() -> new NoIdFoundException(id));
         return ParticipationResponse.fromEntity(participation);
     }
 
     // Update a participation
     public ParticipationResponse updateParticipation(Long id, ParticipationRequest request) {
         Participation existingParticipation = participationRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Participation with ID " + id + " not found."));
+                .orElseThrow(() -> new NoIdFoundException(id));
 
         Player player = playerRepository.findById(request.playerId())
-                .orElseThrow(() -> new RuntimeException("Player with ID " + request.playerId() + " not found."));
+                .orElseThrow(() -> new NoIdFoundException(request.playerId()));
 
         if (!player.isPlaying()) {
-            throw new RuntimeException("Player with ID " + request.playerId() + " is not currently playing.");
+            throw new NoPlayingException("Player with ID " + request.playerId() + " is not currently playing.");
         }
 
         Game game = gameRepository.findById(request.gameId())
-                .orElseThrow(() -> new RuntimeException("Game with ID " + request.gameId() + " not found."));
+                .orElseThrow(() -> new NoIdFoundException(request.gameId()));
 
         boolean exists = participationRepository.existsByPlayerIdAndGameIdAndIdNot(request.playerId(), request.gameId(), id);
         if (exists) {
-            throw new RuntimeException("Player with ID " + request.playerId() + " is already participating in Game with ID " + request.gameId() + ".");
+            throw new DuplicateIdException(request.playerId(), request.gameId());
         }
 
         existingParticipation.setPlayer(player);
@@ -109,7 +109,7 @@ public class ParticipationService {
     // Delete a participation
     public void deleteParticipationById(Long id) {
         if (!participationRepository.existsById(id)) {
-            throw new RuntimeException("Participation with ID " + id + " not found.");
+            throw new NoIdFoundException(id);
         }
         participationRepository.deleteById(id);
     }
@@ -118,10 +118,10 @@ public class ParticipationService {
     @Transactional
     public void finalizeGame(Long gameId) {
         Game game = gameRepository.findById(gameId)
-                .orElseThrow(() -> new RuntimeException("Game not found with ID: " + gameId));
+                .orElseThrow(() -> new NoIdFoundException(gameId));
 
         if (!gameService.isGameFinished(game)) {
-            throw new RuntimeException("Game has not finished yet. End time: " + game.getEndTime());
+            throw new NotFinishGameException(game.getEndTime());
         }
 
         List<Participation> participations = participationRepository.findByGameId(gameId);
