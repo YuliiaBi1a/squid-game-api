@@ -10,7 +10,8 @@ public record GameRequest(
         String description,
         int roundNumber,
         LocalDate gameDate,
-        LocalTime gameTime) {
+        LocalTime gameTime,
+        LocalTime endTime) {
 
     public Game toEntity() {
 
@@ -19,7 +20,8 @@ public record GameRequest(
                 this.description,
                 this.roundNumber,
                 this.gameDate,
-                this.gameTime
+                this.gameTime,
+                this.endTime
         );
     }
 }

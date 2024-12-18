@@ -8,14 +8,14 @@ public record ParticipationResponse(
         Long id,
         Player player,
         Game game,
-        boolean isPassed,
+        Boolean isPassed,
         int score) {
 
-    public ParticipationResponse fromEntity(Participation participation) {
+    public static ParticipationResponse fromEntity(Participation participation) {
         return new ParticipationResponse(participation.getId(),
                 participation.getPlayer(),
                 participation.getGame(),
-                participation.isPassed(),
+                participation.getIsPassed(),
                 participation.getScore());
     }
 }

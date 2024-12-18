@@ -22,12 +22,14 @@ public class Game {
     private int roundNumber;
     private LocalDate gameDate;
     private LocalTime gameTime;
+    private LocalTime endTime;
 
-    public Game(String description, String gameName, int roundNumber, LocalDate gameDate, LocalTime gameTime) {
+    public Game(String description, String gameName, int roundNumber, LocalDate gameDate, LocalTime startTime, LocalTime endTime) {
         this.description = description;
         this.gameName = gameName;
         this.roundNumber = roundNumber;
         this.gameDate = gameDate;
-        this.gameTime = gameTime;
+        this.gameTime = startTime;
+        this.endTime = endTime;
     }
 }

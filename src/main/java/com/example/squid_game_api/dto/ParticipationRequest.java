@@ -7,7 +7,7 @@ import com.example.squid_game_api.entities.Player;
 public record ParticipationRequest(
         Long playerId,
         Long gameId,
-        boolean isPassed,
+        Boolean isPassed,
         int score) {
     public Participation toEntity(Player player, Game game){
         return new Participation(

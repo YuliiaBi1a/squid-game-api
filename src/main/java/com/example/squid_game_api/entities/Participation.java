@@ -23,13 +23,19 @@ public class Participation {
     @JoinColumn(name = "game_id_FK", nullable = false)
     private Game game;
 
-    private boolean isPassed;
+    private Boolean isPassed;
     private int score;
 
-    public Participation(Player player, Game game, boolean isPassed, int score) {
+    public Participation(Player player, Game game, Boolean isPassed, int score) {
         this.player = player;
         this.game = game;
         this.isPassed = isPassed;
-        this.score = score;
+        this.score = 0;
+    }
+    public void setPassed(Boolean isPassed) {
+        this.isPassed = isPassed;
+        if (!isPassed) {
+            this.player.setPlaying(false);
+        }
     }
 }

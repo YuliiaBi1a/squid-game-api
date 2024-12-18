@@ -10,7 +10,8 @@ public record GameResponse(Long id,
                            String description,
                            int roundNumber,
                            LocalDate gameDate,
-                           LocalTime gameTime) {
+                           LocalTime gameTime,
+                           LocalTime endTime) {
 
     public static GameResponse fromEntity(Game game) {
         return new GameResponse(
@@ -19,7 +20,8 @@ public record GameResponse(Long id,
                 game.getDescription(),
                 game.getRoundNumber(),
                 game.getGameDate(),
-                game.getGameTime()
+                game.getGameTime(),
+                game.getEndTime()
         );
     }
 }
