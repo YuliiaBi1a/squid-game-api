@@ -42,4 +42,3 @@ jobs:
       # 5. Ejecutar pruebas
       - name: Run Tests
         run: mvn test
-
