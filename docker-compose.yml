@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:17
+    container_name: squid_game_postgres_db
+    environment:
+      POSTGRES_USER: yulia
+      POSTGRES_PASSWORD: yulia
+      POSTGRES_DB: squid_game_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - springboot_network
+
+volumes:
+  postgres_data:
+
+networks:
+  springboot_network:
