@@ -55,11 +55,6 @@ public class GameService {
         Game existingGame = gameRepository.findById(id)
                 .orElseThrow(() -> new NoIdFoundException(id));
 
-        Optional<Game> game = gameRepository.findByGameName(gameRequest.gameName());
-        if(game.isPresent()){
-            throw new DuplicateNameException(gameRequest.gameName());
-        }
-
         existingGame.setGameName(gameRequest.gameName());
         existingGame.setDescription(gameRequest.description());
         existingGame.setRoundNumber(gameRequest.roundNumber());
