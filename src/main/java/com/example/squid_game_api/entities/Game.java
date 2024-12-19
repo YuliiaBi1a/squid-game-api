@@ -24,9 +24,9 @@ public class Game {
     private LocalTime gameTime;
     private LocalTime endTime;
 
-    public Game(String description, String gameName, int roundNumber, LocalDate gameDate, LocalTime startTime, LocalTime endTime) {
-        this.description = description;
+    public Game(String gameName, String description,  int roundNumber, LocalDate gameDate, LocalTime startTime, LocalTime endTime) {
         this.gameName = gameName;
+        this.description = description;
         this.roundNumber = roundNumber;
         this.gameDate = gameDate;
         this.gameTime = startTime;
@@ -35,8 +35,8 @@ public class Game {
 //for test
     public Game(long l, String gameName, String description, int i, LocalDate now, LocalTime of, LocalTime of1) {
         this.id = l;
-        this.description = description;
         this.gameName = gameName;
+        this.description = description;
         this.roundNumber = i;
         this.gameDate = now;
         this.gameTime = of;

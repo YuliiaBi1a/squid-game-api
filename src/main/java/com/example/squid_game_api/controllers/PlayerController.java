@@ -58,7 +58,7 @@ public class PlayerController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deletePlayer(@PathVariable Long id) {
         playerService.deletePlayerById(id);
-        return new ResponseEntity<>("Player has been deleted.", HttpStatus.OK);
+        return new ResponseEntity<>("Player has been deleted.", HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/inactive")

@@ -7,13 +7,13 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public record GameResponse(Long id,
-                           @JsonProperty("gameName") String gameName,
-                           @JsonProperty("description") String description,
+                           String gameName,
+                           String description,
                            int roundNumber,
                            LocalDate gameDate,
                            LocalTime gameTime,
-                           LocalTime endTime) {
-
+                           LocalTime endTime
+) {
     public static GameResponse fromEntity(Game game) {
         return new GameResponse(
                 game.getId(),

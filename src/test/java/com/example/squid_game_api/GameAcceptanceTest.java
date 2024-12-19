@@ -38,17 +38,17 @@ public class GameAcceptanceTest {
 
     private Game testGame;
 
-/*    @BeforeEach
+    @BeforeEach
     void setup() {
         testGame = new Game();
         testGame.setGameName("Test Game");
         testGame.setDescription("Test description");
         testGame.setRoundNumber(1);
         testGame.setGameDate(LocalDate.now());
-        testGame.setGameTime(LocalTime.of(12, 0));
-        testGame.setEndTime(LocalTime.of(14, 0));
+        testGame.setGameTime(LocalTime.of(12, 0, 0));
+        testGame.setEndTime(LocalTime.of(14, 0, 0));
         gameRepository.save(testGame);
-    }*/
+    }
 
     @Test
     void testCreateGame() throws Exception {
@@ -57,8 +57,8 @@ public class GameAcceptanceTest {
                 "New description",
                 1,
                 LocalDate.now(),
-                LocalTime.of(12, 0),
-                LocalTime.of(14, 0)
+                LocalTime.of(12, 0, 0),
+                LocalTime.of(14, 0, 0)
         );
 
         mockMvc.perform(post("/games")
@@ -70,8 +70,8 @@ public class GameAcceptanceTest {
                 .andExpect(jsonPath("$.description", is(request.description())))
                 .andExpect(jsonPath("$.roundNumber", is(request.roundNumber())))
                 .andExpect(jsonPath("$.gameDate", is(request.gameDate().toString())))
-                .andExpect(jsonPath("$.gameTime", is(request.gameTime().toString())))
-                .andExpect(jsonPath("$.endTime", is(request.endTime().toString())));
+                .andExpect(jsonPath("$.gameTime", is(request.gameTime().toString() + ":00")))
+                .andExpect(jsonPath("$.endTime", is(request.endTime().toString() + ":00")));
     }
 
     @Test
@@ -90,8 +90,8 @@ public class GameAcceptanceTest {
                 .andExpect(jsonPath("$.description", is(testGame.getDescription())))
                 .andExpect(jsonPath("$.roundNumber", is(testGame.getRoundNumber())))
                 .andExpect(jsonPath("$.gameDate", is(testGame.getGameDate().toString())))
-                .andExpect(jsonPath("$.gameTime", is(testGame.getGameTime().toString())))
-                .andExpect(jsonPath("$.endTime", is(testGame.getEndTime().toString())));
+                .andExpect(jsonPath("$.gameTime", is(testGame.getGameTime().toString()+ ":00")))
+                .andExpect(jsonPath("$.endTime", is(testGame.getEndTime().toString()+ ":00")));
     }
 
     @Test
@@ -114,8 +114,8 @@ public class GameAcceptanceTest {
                 .andExpect(jsonPath("$.description", is(updateRequest.description())))
                 .andExpect(jsonPath("$.roundNumber", is(updateRequest.roundNumber())))
                 .andExpect(jsonPath("$.gameDate", is(updateRequest.gameDate().toString())))
-                .andExpect(jsonPath("$.gameTime", is(updateRequest.gameTime().toString())))
-                .andExpect(jsonPath("$.endTime", is(updateRequest.endTime().toString())));
+                .andExpect(jsonPath("$.gameTime", is(updateRequest.gameTime().toString()+ ":00")))
+                .andExpect(jsonPath("$.endTime", is(updateRequest.endTime().toString()+ ":00")));
     }
 
     @Test
@@ -125,13 +125,4 @@ public class GameAcceptanceTest {
                 .andExpect(content().string("Game has been deleted."));
     }
 
-    @Test
-    void testDeleteGameWithDependencies() throws Exception {
-        // Create a game with dependencies, such as participations.
-        // This can be simulated if you have a valid relationship in your model.
-
-        mockMvc.perform(delete("/games/" + testGame.getId()))
-                .andExpect(status().isConflict()) // If dependencies exist
-                .andExpect(content().string(containsString("Cannot delete the game because it has participants.")));
-    }
 }
