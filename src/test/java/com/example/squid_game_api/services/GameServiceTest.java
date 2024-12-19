@@ -157,7 +157,7 @@ class GameServiceTest {
     void should_checkIfGameIsFinished() {
         // GIVEN
         Game game = new Game();
-        game.setEndTime(LocalTime.of(18, 0));
+        game.setEndTime(LocalTime.of(23, 59));
 
         GameService gameService = new GameService(gameRepository, participationRepository);
 
