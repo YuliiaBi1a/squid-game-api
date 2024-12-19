@@ -32,4 +32,14 @@ public class Game {
         this.gameTime = startTime;
         this.endTime = endTime;
     }
+//for test
+    public Game(long l, String gameName, String description, int i, LocalDate now, LocalTime of, LocalTime of1) {
+        this.id = l;
+        this.description = description;
+        this.gameName = gameName;
+        this.roundNumber = i;
+        this.gameDate = now;
+        this.gameTime = of;
+        this.endTime = of1;
+    }
 }

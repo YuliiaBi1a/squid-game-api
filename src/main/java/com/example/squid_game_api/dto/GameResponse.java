@@ -1,13 +1,14 @@
 package com.example.squid_game_api.dto;
 
 import com.example.squid_game_api.entities.Game;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 public record GameResponse(Long id,
-                           String gameName,
-                           String description,
+                           @JsonProperty("gameName") String gameName,
+                           @JsonProperty("description") String description,
                            int roundNumber,
                            LocalDate gameDate,
                            LocalTime gameTime,

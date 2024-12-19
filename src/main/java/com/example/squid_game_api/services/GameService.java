@@ -88,6 +88,10 @@ public class GameService {
 
     //Check if game is already has been finished
     public boolean isGameFinished(Game game) {
+        if (game.getEndTime() == null) {
+            throw new IllegalArgumentException("Game end time is not set.");
+        }
+
         LocalTime now = LocalTime.now();
         return now.isAfter(game.getEndTime());
     }

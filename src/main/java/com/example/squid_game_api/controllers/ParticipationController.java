@@ -53,7 +53,7 @@ public class ParticipationController {
     @PutMapping("/finalize/{gameId}")
     public ResponseEntity<String> finalizeGame(@PathVariable Long gameId) {
         participationService.finalizeGame(gameId);
-        return new ResponseEntity<>("Game finalized and participants' statuses updated.", HttpStatus.OK);
+        return new ResponseEntity<>("Game finalized and participants statuses updated.", HttpStatus.OK);
     }
 
 }

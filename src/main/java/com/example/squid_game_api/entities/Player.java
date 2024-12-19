@@ -23,4 +23,12 @@ public class Player {
         this.age = age;
         this.isPlaying = true;
     }
+//for test
+    public Player(long l, String name, int i, boolean b) {
+        this.id = l;
+        this.name = name;
+        this.age = i;
+        this.isPlaying = b;
+    }
+
 }
