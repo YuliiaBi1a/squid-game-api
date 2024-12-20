@@ -149,7 +149,9 @@ git clone https://github.com/YuliiaBi1a/squid-game-api.git
 - Development Environment (PostgreSQL via Docker): Configured in resources/application-dev.yml.
 - For testing, the application-test.yml contains the configuration for an in-memory H2 database.
 - For development, the application-dev.yml contains the configuration for a PostgreSQL database deployed using Docker.
-  ![UML](src/main/java/com/example/squid_game_api/utils/uml.png)
+
+  <img src="src/main/java/com/example/squid_game_api/utils/mer.png" alt="img.png" width="300" height="250">
+
 3. **Run the application**:
 To run the application, first, make sure you have the correct profile active. You can specify the active profile by adding the following to your application.properties (or application-dev.yml and application-test.yml for environment-specific settings):
 -For test environment:
@@ -224,7 +226,12 @@ mvn spring-boot:run -Dspring.profiles.active=dev
 
 ## 🧪Unit and Acceptance Tests
 The project includes both unit tests and acceptance tests to ensure the correctness and reliability of the application. Unit tests are written using JUnit 5 and are focused on testing individual components such as services and helper methods. MockMvc is used for testing the REST API endpoints, allowing for simulation of HTTP requests and validation of responses without actually starting a server. Acceptance tests ensure that the system works as expected in an integrated environment, testing the full flow of data and interactions between components. Mockito is used for mocking dependencies in unit tests to isolate the logic and make the tests more efficient and focused.
-![Test Coverage](src/main/java/com/example/squid_game_api/utils/test-coverege.png)
+
+<img src="src/main/java/com/example/squid_game_api/utils/test-coverege.png" alt="img.png" width="300" height="250">
+
+---
+
+---
 
 #### Project documentation 
 - First run App.
