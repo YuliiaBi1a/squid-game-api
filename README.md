@@ -16,12 +16,12 @@
 ## 💡Project Description
 This project is a REST API built with Java Spring Boot to manage data about players, games, and participation. The API allows adding, updating, deleting, and retrieving information about games, participants, and task completion statuses.
 
-The API already includes a small database of games that have been added. You can:
-
-Add participants to a game.
-Search for players by name when adding them to a game.
-View all participants associated with a game.
-After the game time has expired, you can make a request that will randomly change the game completion status (true/false). For participants who have passed, points will be awarded. For participants who have not passed, the isPlaying attribute will be set to false, indicating that they are eliminated. Players with the isPlaying status set to false can no longer be added to new games.
+The API already includes a small database of games that have been added. 
+You can:
+- Add participants to a game.
+- Search for players by name when adding them to a game.
+- View all participants associated with a game.
+- After the game time has expired, you can make a request that will randomly change the game completion status (true/false). For participants who have passed, points will be awarded. For participants who have not passed, the isPlaying attribute will be set to false, indicating that they are eliminated. Players with the isPlaying status set to false can no longer be added to new games.
 
 ![img.png](src/main/java/com/example/squid_game_api/utils/video-api-flow.gif)
 
@@ -119,6 +119,7 @@ URL: http://localhost:8080 + endpoint
 ### 💻 API Testing
 - Use **Postman** or **Insomnia** for testing the API.
 - Import the collection of endpoints from the file [SquidGame.insomnia_collection.json](src/main/java/com/example/squid_game_api/utils/Insomnia_2024-12-19.json).
+  
   ![img.png](src/main/java/com/example/squid_game_api/utils/video-insomnia.gif)
 ---
 
