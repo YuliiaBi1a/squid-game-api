@@ -2,7 +2,7 @@
 # 🦑 Squid Game — REST API
 
 ## 📖 Table of Contents
-- [💡 Project Description](#💡-project-description)
+- [Project Description](#project-description)
 - [🚀 Key Features](#key-features)
 - [📂 Project Structure](#project-structure)
 - [📦 API Endpoints](#api-endpoints)
@@ -13,7 +13,7 @@
 
 ---
 
-## 💡 Project Description
+## Project Description
 This project is a REST API built with Java Spring Boot to manage data about players, games, and participation. The API allows adding, updating, deleting, and retrieving information about games, participants, and task completion statuses.
 
 The API already includes a small database of games that have been added. You can:
