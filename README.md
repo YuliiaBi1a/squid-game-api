@@ -3,13 +3,13 @@
 
 ## 📖 Table of Contents
 - [Project Description](#project-description)
-- [🚀 Key Features](#key-features)
-- [📂 Project Structure](#project-structure)
-- [📦 API Endpoints](#api-endpoints)
-- [✍️ Working with Players and Games](#working-with-players-and-games)
-- [🛠️ Technologies Used](#technologies-used)
-- [⚙️ Installation and Setup](#installation-and-setup)
-- [🧪 Unit and Acceptance Tests](#unit-and-acceptance-tests)
+- [Key Features](#key-features)
+- [Project Structure](#project-structure)
+- [API Endpoints](#api-endpoints)
+- [Working with Players and Games](#working-with-players-and-games)
+- [Technologies Used](#technologies-used)
+- [Installation and Setup](#installation-and-setup)
+- [Unit and Acceptance Tests](#unit-and-acceptance-tests)
 
 ---
 
@@ -25,7 +25,7 @@ After the game time has expired, you can make a request that will randomly chang
 
 ![img.png](src/main/java/com/example/squid_game_api/utils/video-api-flow.gif)
 
-## 🚀 Key Features
+## 🚀Key Features
 ### 🕹️ Player Management
 - Add a new player.
 - List all players.
@@ -35,14 +35,14 @@ After the game time has expired, you can make a request that will randomly chang
 - Delete a player by ID.
 - Delete all inactive players.
 
-### 🎮 Game Management
+### 🎮Game Management
 - Register a new game.
 - List all games.
 - Retrieve game information by ID.
 - Game statistics.
 - Delete a game by ID.
 
-### 📜 Participation
+### 📜Participation
 - Create game participation.
 - Find, update, delete game participation.
 - Finalize game
@@ -50,14 +50,14 @@ After the game time has expired, you can make a request that will randomly chang
 
 ---
 
-## 📂 Project Structure
+## 📂Project Structure
 
 The project follows the principle of separation of concerns, using three main layers: controllers for handling HTTP requests, services for business logic, and repositories for database interaction. Logic is centralized in services, with controllers kept thin, delegating business logic operations and database interactions. DTOs are used for data transfer between layers, and global exception handling is implemented for consistent error responses. Custom exceptions are employed for domain-specific errors, allowing for more precise and informative error handling. This approach ensures a clear architecture, making the codebase maintainable, scalable, and easy to extend.
 ![img.png](src/main/java/com/example/squid_game_api/utils/img.png)
 
 ---
 
-## 📦 API Endpoints 
+## 📦API Endpoints 
 URL: http://localhost:8080 + endpoint
 ### Player Endpoints
 | Method | Endpoint                 | Description                  |
@@ -91,7 +91,7 @@ URL: http://localhost:8080 + endpoint
 
 ---
 
-## ✍️ Working with Players and Games
+## ✍️Working with Players and Games
 
 ### Registering a Player (Request)
 **POST** `http://localhost:8080/players`
@@ -121,7 +121,7 @@ URL: http://localhost:8080 + endpoint
   ![img.png](src/main/java/com/example/squid_game_api/utils/video-insomnia.gif)
 ---
 
-## 🛠️ Technologies Used
+## 🛠️Technologies Used
 - **Java 21**: Programming language.
 - **Spring Boot**: Framework for building REST APIs.
 - **Maven**: Build tool.
@@ -133,7 +133,7 @@ URL: http://localhost:8080 + endpoint
 
 ---
 
-## ⚙️ Installation and Setup
+## ⚙️Installation and Setup
 
 1. **Clone the repository**:
 
@@ -220,9 +220,13 @@ mvn spring-boot:run -Dspring.profiles.active=dev
 
 ---
 
-## 🧪 Unit and Acceptance Tests
+## 🧪Unit and Acceptance Tests
 The project includes both unit tests and acceptance tests to ensure the correctness and reliability of the application. Unit tests are written using JUnit 5 and are focused on testing individual components such as services and helper methods. MockMvc is used for testing the REST API endpoints, allowing for simulation of HTTP requests and validation of responses without actually starting a server. Acceptance tests ensure that the system works as expected in an integrated environment, testing the full flow of data and interactions between components. Mockito is used for mocking dependencies in unit tests to isolate the logic and make the tests more efficient and focused.
 ![Test Coverage](src/main/java/com/example/squid_game_api/utils/test-coverege.png)
+
+#### Project documentation 
+- First run App.
+- Use [link](http://localhost:8080/swagger-ui/index.html) to read project documentation genereted by Springdoc OpenAPI.
 
 #### Project made by [Yuliia Bila](https://github.com/YuliiaBi1a)
 ( ˶ˆ ᗜ ˆ˵ ) 
