@@ -189,8 +189,8 @@ services:
     image: postgres:17
     container_name: squid_game_postgres_db
     environment:
-      POSTGRES_USER: yulia
-      POSTGRES_PASSWORD: yulia
+      POSTGRES_USER: adm
+      POSTGRES_PASSWORD: adm
       POSTGRES_DB: squid_game_db
     ports:
       - "5432:5432"
