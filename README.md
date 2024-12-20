@@ -54,7 +54,7 @@ After the game time has expired, you can make a request that will randomly chang
 
 The project follows the principle of separation of concerns, using three main layers: controllers for handling HTTP requests, services for business logic, and repositories for database interaction. Logic is centralized in services, with controllers kept thin, delegating business logic operations and database interactions. DTOs are used for data transfer between layers, and global exception handling is implemented for consistent error responses. Custom exceptions are employed for domain-specific errors, allowing for more precise and informative error handling. This approach ensures a clear architecture, making the codebase maintainable, scalable, and easy to extend.
 
-<img src="src/main/java/com/example/squid_game_api/utils/img.png" alt="img.png" width="150" height="300">
+<img src="src/main/java/com/example/squid_game_api/utils/img.png" alt="img.png" width="250" height="350">
 
 ---
 
