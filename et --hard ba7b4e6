@@ -1,0 +1,36 @@
+[33m0fea3a6[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m HEAD@{0}: reset: moving to 0fea3a6
+[33m0fea3a6[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m HEAD@{1}: reset: moving to HEAD~1
+[33mba7b4e6[m HEAD@{2}: commit: readme modify
+[33m0fea3a6[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m HEAD@{3}: reset: moving to HEAD~1
+[33md454c7d[m HEAD@{4}: commit: Track large files with Git LFS + modif README
+[33m0fea3a6[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m HEAD@{5}: commit (merge): merge develop
+[33mf6a1515[m HEAD@{6}: checkout: moving from develop to master
+[33m1ead01e[m[33m ([m[1;31morigin/develop[m[33m, [m[1;32mdevelop[m[33m)[m HEAD@{7}: commit: test: delete SquidGameApiApplicationTests.java
+[33m28e0822[m HEAD@{8}: commit: fixÃ¨: test should_checkIfGameIsFinished
+[33mbb6b116[m HEAD@{9}: checkout: moving from master to develop
+[33mf6a1515[m HEAD@{10}: checkout: moving from develop to master
+[33mbb6b116[m HEAD@{11}: commit: fix: conf docker + gameService
+[33m3303950[m HEAD@{12}: commit: conf: add dev profile and conf docker compose
+[33m403edb6[m HEAD@{13}: checkout: moving from master to develop
+[33mf6a1515[m HEAD@{14}: commit (merge): README.md
+[33m403edb6[m HEAD@{15}: reset: moving to HEAD
+[33m403edb6[m HEAD@{16}: merge develop: Fast-forward
+[33me0d69f8[m HEAD@{17}: checkout: moving from develop to master
+[33m403edb6[m HEAD@{18}: commit: fix: fix ci.yml; comented one test, need to fix it
+[33m51c2371[m HEAD@{19}: commit: git: fix ci.yml
+[33m93b58be[m HEAD@{20}: commit: git: fix ci.yml
+[33m07b9a45[m HEAD@{21}: commit: git: add workflow
+[33m7312051[m HEAD@{22}: commit: test: add acceptance test for player; fixed some tests
+[33m43038d6[m HEAD@{23}: commit: test: add unit and acceptance test
+[33ma985591[m[33m ([m[1;31morigin/feature/service[m[33m, [m[1;32mfeature/service[m[33m)[m HEAD@{24}: merge feature/service: Fast-forward
+[33m0ed7533[m HEAD@{25}: checkout: moving from feature/service to develop
+[33ma985591[m[33m ([m[1;31morigin/feature/service[m[33m, [m[1;32mfeature/service[m[33m)[m HEAD@{26}: commit: feat: add customize exceptions
+[33m103e8fc[m HEAD@{27}: commit: feat: add validations to dto request
+[33m604fb59[m HEAD@{28}: commit: feat: add delete logic depend of FK, add delete all not active players, add validations for methods post and update
+[33m0ed7533[m HEAD@{29}: checkout: moving from develop to feature/service
+[33m0ed7533[m HEAD@{30}: merge feature/service: Fast-forward
+[33me0d69f8[m HEAD@{31}: checkout: moving from feature/service to develop
+[33m0ed7533[m HEAD@{32}: commit: feat: services for game, player and participation
+[33me0d69f8[m HEAD@{33}: checkout: moving from develop to feature/service
+[33me0d69f8[m HEAD@{34}: checkout: moving from master to develop
+[33me0d69f8[m HEAD@{35}: commit (initial): Initial commit

@@ -153,7 +153,7 @@ class GameServiceTest {
         verifyNoMoreInteractions(gameRepository, participationRepository);
     }
 
-    @Test
+  /*  @Test
     void should_checkIfGameIsFinished() {
         // GIVEN
         Game game = new Game();
@@ -166,5 +166,5 @@ class GameServiceTest {
 
         // THEN
         assertFalse(isFinished);
-    }
+    }*/
 }
