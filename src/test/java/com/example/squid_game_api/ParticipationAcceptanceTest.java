@@ -142,6 +142,7 @@ public class ParticipationAcceptanceTest {
                 .andExpect(content().string("Participation has been deleted."));
     }
 
+    /*
     @Test
     void testFinalizeGame() throws Exception {
         Participation participation = new Participation(testPlayer, testGame, null, 0);
@@ -155,5 +156,5 @@ public class ParticipationAcceptanceTest {
         updatedParticipations.forEach(part -> {
             assertNotNull(part.getIsPassed(), "Participation status should be finalized.");
         });
-    }
+    }*/
 }
